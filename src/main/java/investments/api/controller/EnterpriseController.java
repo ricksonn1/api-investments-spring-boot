@@ -19,35 +19,35 @@ import java.util.Optional;
 public class EnterpriseController {
 
     @Autowired
-    private EnterpriseRepository repository;
+    private EnterpriseRepository enterpriseRepository;
 
     @PostMapping
     @Transactional
     public ResponseEntity createEnterprise(@RequestBody @Valid EnterpriseDTO data) {
 
         Enterprise newEnterprise = new Enterprise(data);
-        repository.save(newEnterprise);
+        enterpriseRepository.save(newEnterprise);
         return ResponseEntity.ok().build();
 
     }
 
     @GetMapping
     public ResponseEntity<Page<Enterprise>> getAllEnterprises(Pageable pageable) {
-        Page<Enterprise> enterprises = repository.findAll(pageable);
+        Page<Enterprise> enterprises = enterpriseRepository.findAll(pageable);
         return ResponseEntity.ok(enterprises);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity getOneEnterprise(@PathVariable Long id) {
 
-        var enterpriseById = repository.findById(id);
+        var enterpriseById = enterpriseRepository.findById(id);
         return ResponseEntity.ok(enterpriseById);
     }
 
     @PutMapping("/{id}")
     @Transactional
     public ResponseEntity updateEnterprise(@PathVariable Long id, @RequestBody @Valid EnterpriseDTO data) {
-        Optional<Enterprise> optionalEnterprise = repository.findById(id);
+        Optional<Enterprise> optionalEnterprise = enterpriseRepository.findById(id);
         if (optionalEnterprise.isPresent()) {
             Enterprise enterprise = optionalEnterprise.get();
             enterprise.setName(data.name());
@@ -63,8 +63,8 @@ public class EnterpriseController {
     @Transactional
     public ResponseEntity deletEnterprise(@PathVariable Long id) {
 
-        var delet = repository.findById(id);
-        repository.deleteById(id);
+        var delet = enterpriseRepository.findById(id);
+        enterpriseRepository.deleteById(id);
         return ResponseEntity.ok().build();
     }
 }

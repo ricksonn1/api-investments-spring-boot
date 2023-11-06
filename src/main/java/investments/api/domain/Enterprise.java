@@ -8,6 +8,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -22,6 +25,9 @@ public class Enterprise {
     private String name;
     private String ticker;
     private String sector;
+
+    @OneToMany(mappedBy = "enterprise", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Dividend> dividends = new ArrayList<>();
 
     public Long getId() {
         return id;
