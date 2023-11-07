@@ -1,7 +1,7 @@
 CREATE TABLE dividends (
-    id BIGINT PRIMARY KEY AUTO_INCREMENT,
-    datePaidAmount DATE NOT NULL,
-    amountPaid DECIMAL(10,2) NOT NULL,
-    id_enterprise BIGINT NOT NULL,
-    FOREIGN KEY (id_enterprise) REFERENCES enterprises(id)
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    date_amount_paid DATE NOT NULL,
+    amount_paid DECIMAL(10,2) NOT NULL,
+    enterprise_id BIGINT NOT NULL,
+    CONSTRAINT fk_dividend_enterprise FOREIGN KEY (enterprise_id) REFERENCES enterprises (id)
 );
