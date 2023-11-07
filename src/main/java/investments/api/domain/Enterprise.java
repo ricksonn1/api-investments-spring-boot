@@ -26,8 +26,10 @@ public class Enterprise {
     private String ticker;
     private String sector;
 
-    @OneToMany(mappedBy = "enterprise", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Dividend> dividends = new ArrayList<>();
+    @OneToMany(mappedBy = "enterprise", cascade = CascadeType.ALL)
+    private List<Dividend> dividends;
+
+
 
     public Long getId() {
         return id;
@@ -61,9 +63,12 @@ public class Enterprise {
         this.sector = sector;
     }
 
+//
     public Enterprise(EnterpriseDTO data) {
+        this.id = data.id();
         this.name = data.name();
         this.ticker = data.ticker();
         this.sector = data.sector();
+        this.dividends = new ArrayList<>();
     }
 }

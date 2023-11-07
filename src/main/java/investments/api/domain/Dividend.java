@@ -1,11 +1,9 @@
 package investments.api.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import investments.api.dto.DividendDTO;
-import investments.api.repository.EnterpriseRepository;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
@@ -14,8 +12,6 @@ import java.util.Optional;
 
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
 @Entity(name = "dividend")
 @Table(name = "dividends")
 public class Dividend {
@@ -24,17 +20,23 @@ public class Dividend {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private BigDecimal amountPaid;
-    private LocalDate datePaidAmount;
+    @Column(nullable = false)
+    private LocalDate dateAmountPaid;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_enterprise")
+    @Column(nullable = false)
+    private BigDecimal amountPaid;
+
+    @ManyToOne
+    @JoinColumn(name = "enterprise_id")
+    @JsonIgnore
     private Enterprise enterprise;
 
-    public Dividend(DividendDTO data) {
-        this.amountPaid = data.amountPaid();
-        this.datePaidAmount = data.datePaidAmount();
-    }
+
+//    public Dividend(DividendDTO data) {
+//        this.dateAmountPaid = data.dateAmountPaid();
+//        this.amountPaid = data.amountPaid();
+//        this.enterprise = data.enterpriseId();
+//    }
 
     public Long getId() {
         return id;
@@ -42,6 +44,14 @@ public class Dividend {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public LocalDate getDateAmountPaid() {
+        return dateAmountPaid;
+    }
+
+    public void setDateAmountPaid(LocalDate dateAmountPaid) {
+        this.dateAmountPaid = dateAmountPaid;
     }
 
     public BigDecimal getAmountPaid() {
@@ -52,14 +62,6 @@ public class Dividend {
         this.amountPaid = amountPaid;
     }
 
-    public LocalDate getDatePaidAmount() {
-        return datePaidAmount;
-    }
-
-    public void setDatePaidAmount(LocalDate datePaidAmount) {
-        this.datePaidAmount = datePaidAmount;
-    }
-
     public Enterprise getEnterprise() {
         return enterprise;
     }
@@ -68,5 +70,3 @@ public class Dividend {
         this.enterprise = enterprise;
     }
 }
-
-
