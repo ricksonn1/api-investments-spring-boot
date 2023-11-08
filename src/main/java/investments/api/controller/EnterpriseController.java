@@ -1,6 +1,7 @@
 package investments.api.controller;
 
 import investments.api.domain.Enterprise;
+import investments.api.dto.DataDetaisEnterprisesDTO;
 import investments.api.dto.EnterpriseDTO;
 import investments.api.repository.EnterpriseRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -21,6 +22,7 @@ public class EnterpriseController {
     @Autowired
     private EnterpriseRepository enterpriseRepository;
 
+    //endpoint responsável por criar uma nova empresa.
     @PostMapping
     @Transactional
     public ResponseEntity createEnterprise(@RequestBody @Valid EnterpriseDTO data) {
@@ -31,19 +33,22 @@ public class EnterpriseController {
 
     }
 
+    //endpoint responsável por buscar todas as empresas cadastradas.
     @GetMapping
-    public ResponseEntity<Page<Enterprise>> getAllEnterprises(Pageable pageable) {
-        Page<Enterprise> enterprises = enterpriseRepository.findAll(pageable);
-        return ResponseEntity.ok(enterprises);
+    public ResponseEntity<Page<DataDetaisEnterprisesDTO>> getAllEnterprises(Pageable pageable) {
+        var enterprise = enterpriseRepository.findAll(pageable).map(DataDetaisEnterprisesDTO::new);
+        return ResponseEntity.ok(enterprise);
     }
 
+    //endpoint responsável por buscar uma empresa pelo ID.
     @GetMapping("/{id}")
     public ResponseEntity getOneEnterprise(@PathVariable Long id) {
 
-        var enterpriseById = enterpriseRepository.findById(id);
-        return ResponseEntity.ok(enterpriseById);
+        var enterpriseById = enterpriseRepository.getReferenceById(id);
+        return ResponseEntity.ok(new DataDetaisEnterprisesDTO(enterpriseById));
     }
 
+    //endpoint responsável por atualizar os dados de uma empresa pelo ID.
     @PutMapping("/{id}")
     @Transactional
     public ResponseEntity updateEnterprise(@PathVariable Long id, @RequestBody @Valid EnterpriseDTO data) {
@@ -59,11 +64,11 @@ public class EnterpriseController {
         }
     }
 
+    //endpoint responsável por excluir uma empresa (e seus dividendos) pelo ID.
     @DeleteMapping("/{id}")
     @Transactional
     public ResponseEntity deletEnterprise(@PathVariable Long id) {
 
-        var delet = enterpriseRepository.findById(id);
         enterpriseRepository.deleteById(id);
         return ResponseEntity.ok().build();
     }

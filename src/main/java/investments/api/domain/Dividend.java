@@ -12,7 +12,7 @@ import java.util.Optional;
 
 @Getter
 @Setter
-@Entity(name = "dividend")
+@Entity(name = "Dividend")
 @Table(name = "dividends")
 public class Dividend {
 
@@ -26,7 +26,7 @@ public class Dividend {
     @Column(nullable = false)
     private BigDecimal amountPaid;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "enterprise_id")
     @JsonIgnore
     private Enterprise enterprise;

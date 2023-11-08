@@ -6,10 +6,14 @@ import investments.api.domain.Dividend;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-public record DividendDTO(
+public record DataDetailsDividendDTO(
         Long id,
         BigDecimal amountPaid,
         @JsonFormat(pattern = "dd/MM/yyyy")
         LocalDate dateAmountPaid,
-        Long enterpriseId) {
+        String enterpriseName) {
+    public DataDetailsDividendDTO(Dividend dividend) {
+        this(dividend.getId(), dividend.getAmountPaid(), dividend.getDateAmountPaid(), dividend.getEnterprise().getName());
+    }
 }
+

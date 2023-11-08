@@ -15,7 +15,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity(name = "enterprise")
+@Entity(name = "Enterprise")
 @Table(name = "enterprises")
 public class Enterprise {
 
@@ -26,8 +26,8 @@ public class Enterprise {
     private String ticker;
     private String sector;
 
-    @OneToMany(mappedBy = "enterprise", cascade = CascadeType.ALL)
-    private List<Dividend> dividends;
+    @OneToMany(mappedBy = "enterprise", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Dividend> dividends = new ArrayList<>();
 
 
 
@@ -69,6 +69,6 @@ public class Enterprise {
         this.name = data.name();
         this.ticker = data.ticker();
         this.sector = data.sector();
-        this.dividends = new ArrayList<>();
+       this.dividends = new ArrayList<>();
     }
 }
