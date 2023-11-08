@@ -1,7 +1,7 @@
-package investments.api.dto;
+package investments.api.adapters.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import investments.api.domain.Dividend;
+import investments.api.core.domain.Dividend;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;

@@ -1,7 +1,7 @@
-package investments.api.domain;
+package investments.api.core.domain;
 
 
-import investments.api.dto.EnterpriseDTO;
+import investments.api.adapters.dto.EnterpriseDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

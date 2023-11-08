@@ -1,9 +1,9 @@
-package investments.api.controller;
+package investments.api.adapters.controller;
 
-import investments.api.domain.Enterprise;
-import investments.api.dto.DataDetaisEnterprisesDTO;
-import investments.api.dto.EnterpriseDTO;
-import investments.api.repository.EnterpriseRepository;
+import investments.api.core.domain.Enterprise;
+import investments.api.adapters.dto.DataDetaisEnterprisesDTO;
+import investments.api.adapters.dto.EnterpriseDTO;
+import investments.api.infrastructure.repository.EnterpriseRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;

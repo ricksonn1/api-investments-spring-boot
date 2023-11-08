@@ -1,14 +1,12 @@
-package investments.api.domain;
+package investments.api.core.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import investments.api.dto.DividendDTO;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.Optional;
 
 @Getter
 @Setter

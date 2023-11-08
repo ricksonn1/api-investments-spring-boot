@@ -1,7 +1,6 @@
-package investments.api.dto;
+package investments.api.adapters.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import investments.api.domain.Dividend;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -12,4 +11,5 @@ public record DividendDTO(
         @JsonFormat(pattern = "dd/MM/yyyy")
         LocalDate dateAmountPaid,
         Long enterpriseId) {
+
 }

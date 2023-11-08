@@ -1,13 +1,11 @@
-package investments.api.controller;
+package investments.api.adapters.controller;
 
-import investments.api.domain.Dividend;
-import investments.api.domain.Enterprise;
-import investments.api.dto.DataDetailsDividendDTO;
-import investments.api.dto.DataDetaisEnterprisesDTO;
-import investments.api.dto.DividendDTO;
-import investments.api.dto.EnterpriseDTO;
-import investments.api.repository.DividendRepository;
-import investments.api.repository.EnterpriseRepository;
+import investments.api.core.domain.Dividend;
+import investments.api.core.domain.Enterprise;
+import investments.api.adapters.dto.DataDetailsDividendDTO;
+import investments.api.adapters.dto.DividendDTO;
+import investments.api.infrastructure.repository.DividendRepository;
+import investments.api.infrastructure.repository.EnterpriseRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;

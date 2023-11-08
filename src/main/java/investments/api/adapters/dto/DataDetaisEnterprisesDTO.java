@@ -1,7 +1,6 @@
-package investments.api.dto;
+package investments.api.adapters.dto;
 
-import investments.api.domain.Enterprise;
-import jakarta.validation.constraints.NotBlank;
+import investments.api.core.domain.Enterprise;
 
 public record DataDetaisEnterprisesDTO(
         Long id,
