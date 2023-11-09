@@ -9,5 +9,5 @@ import java.util.Optional;
 
 public interface EnterpriseRepository extends JpaRepository<Enterprise, Long> {
     @Query("SELECT e FROM Enterprise e WHERE e.name = :name")
-    Enterprise findByName(@Param("name") String name);
+    Optional<Enterprise> findByName(@Param("name") String name);
 }

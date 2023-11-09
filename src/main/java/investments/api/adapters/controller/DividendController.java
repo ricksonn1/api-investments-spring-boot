@@ -1,9 +1,12 @@
 package investments.api.adapters.controller;
 
+import investments.api.core.bussinesRule.DividendBussines;
 import investments.api.core.domain.Dividend;
 import investments.api.core.domain.Enterprise;
 import investments.api.adapters.dto.DataDetailsDividendDTO;
 import investments.api.adapters.dto.DividendDTO;
+import investments.api.infrastructure.exceptions.DividendAlreadyRegisteredException;
+import investments.api.infrastructure.exceptions.EnterpriseNotFoundException;
 import investments.api.infrastructure.repository.DividendRepository;
 import investments.api.infrastructure.repository.EnterpriseRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -24,22 +27,16 @@ public class DividendController {
     @Autowired
     private EnterpriseRepository enterpriseRepository;
 
+    @Autowired
+    private DividendBussines dividendBussines;
+
     //endpoint responsável por cadastrar um novo pagamento de dividendos para uma empresa específica.
-    @PostMapping("/dividends")
+    @PostMapping("enterprises/{id}/dividends")
     @Transactional
-    public ResponseEntity createDividend(@RequestBody @Valid DividendDTO data) {
+    public ResponseEntity createDividend(@PathVariable Long id, @RequestBody @Valid DividendDTO data) throws DividendAlreadyRegisteredException, EnterpriseNotFoundException {
 
-        Enterprise enterprise = enterpriseRepository.findById(data.enterpriseId())
-                .orElseThrow(() -> new EntityNotFoundException("Empresa não encontrada"));
-
-        Dividend dividend = new Dividend();
-        dividend.setDateAmountPaid(data.dateAmountPaid());
-        dividend.setAmountPaid(data.amountPaid());
-        dividend.setEnterprise(enterprise);
-
-        dividendRepository.save(dividend);
-
-        return ResponseEntity.ok().build();
+        Dividend dividend = dividendBussines.createDividendForEnterprise(id, data);
+        return ResponseEntity.ok(dividend);
     }
 
     //endpoint responsável por buscar todos os pagamentos de dividendos de uma empresa específica.

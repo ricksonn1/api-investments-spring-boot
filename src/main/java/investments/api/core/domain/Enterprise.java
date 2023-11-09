@@ -30,7 +30,6 @@ public class Enterprise {
     private List<Dividend> dividends = new ArrayList<>();
 
 
-
     public Long getId() {
         return id;
     }
@@ -63,12 +62,24 @@ public class Enterprise {
         this.sector = sector;
     }
 
-//
+    //
     public Enterprise(EnterpriseDTO data) {
         this.id = data.id();
         this.name = data.name();
         this.ticker = data.ticker();
         this.sector = data.sector();
-       this.dividends = new ArrayList<>();
+        this.dividends = new ArrayList<>();
+    }
+
+    public void updateEnterprise(EnterpriseDTO data) {
+        if (data.name() != null) {
+            this.name = data.name();
+        }
+        if (data.ticker() != null) {
+            this.ticker = data.ticker();
+        }
+        if (data.sector() != null) {
+            this.sector = data.sector();
+        }
     }
 }
