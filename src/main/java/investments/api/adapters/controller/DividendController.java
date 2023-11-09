@@ -30,7 +30,6 @@ public class DividendController {
     @Autowired
     private DividendBussines dividendBussines;
 
-    //endpoint responsável por cadastrar um novo pagamento de dividendos para uma empresa específica.
     @PostMapping("enterprises/{id}/dividends")
     @Transactional
     public ResponseEntity createDividend(@PathVariable Long id, @RequestBody @Valid DividendDTO data) throws DividendAlreadyRegisteredException, EnterpriseNotFoundException {
@@ -39,14 +38,12 @@ public class DividendController {
         return ResponseEntity.ok(dividend);
     }
 
-    //endpoint responsável por buscar todos os pagamentos de dividendos de uma empresa específica.
     @GetMapping("/enterprises/{id}/dividends")
     public ResponseEntity searchDividendsByCompany(@PathVariable Long id) {
-        var dividends = enterpriseRepository.findById(id);
+        var dividends = dividendBussines.getDividendsByCompany(id);
         return ResponseEntity.ok((dividends));
     }
 
-    //endpoint responsável por buscar o pagamento de dividendos de uma empresa específica em uma determinada data.
     @GetMapping("/enterprises/{id}/dividends/{date}")
     public ResponseEntity<DataDetailsDividendDTO> getDividendByCompanyAndDate(@PathVariable Long id, @PathVariable String date) {
         LocalDate localDate = LocalDate.parse(date);
@@ -56,15 +53,13 @@ public class DividendController {
         return ResponseEntity.ok(new DataDetailsDividendDTO(dividend));
     }
 
-    //endpoint responsável por atualizar o valor do pagamento de dividendos de uma empresa específica em uma determinada data.
     @PutMapping("/enterprises/{id}/dividends/{date}")
     @Transactional
     public ResponseEntity updateDividendByCompanyAndDate(@RequestBody @Valid DividendDTO data, @PathVariable Long id, @PathVariable String date) {
 
         LocalDate localDate = LocalDate.parse(date);
 
-        Dividend dividend = dividendRepository.findByEnterpriseIdAndDateAmountPaid(id, localDate)
-                .orElseThrow(() -> new EntityNotFoundException(("Pagamento de dividendos não encontrado para a empresa com o ID" + id + " na data " + date)));
+        Dividend dividend = dividendRepository.findByEnterpriseIdAndDateAmountPaid(id, localDate).orElseThrow(() -> new EntityNotFoundException(("Pagamento de dividendos não encontrado para a empresa com o ID" + id + " na data " + date)));
 
         dividend.setAmountPaid(data.amountPaid());
         dividend = dividendRepository.save(dividend);
@@ -79,8 +74,7 @@ public class DividendController {
         return ResponseEntity.ok(dto);
     }
 
-    //endpoint responsável por excluir o pagamento de dividendos de uma empresa específica em uma determinada data.
-    @DeleteMapping("/enterprise/{id}/dividends/{date}")
+    @DeleteMapping("/enterprise/{id}/dividends")
     @Transactional
     public ResponseEntity deletDividendByDate(@PathVariable Long id, @PathVariable String date) {
 

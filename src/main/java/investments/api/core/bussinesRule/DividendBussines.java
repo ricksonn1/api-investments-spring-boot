@@ -1,5 +1,6 @@
 package investments.api.core.bussinesRule;
 
+import investments.api.adapters.dto.DataDetailsDividendDTO;
 import investments.api.adapters.dto.DividendDTO;
 import investments.api.core.domain.Dividend;
 import investments.api.core.domain.Enterprise;
@@ -7,11 +8,10 @@ import investments.api.infrastructure.exceptions.DividendAlreadyRegisteredExcept
 import investments.api.infrastructure.exceptions.EnterpriseNotFoundException;
 import investments.api.infrastructure.repository.DividendRepository;
 import investments.api.infrastructure.repository.EnterpriseRepository;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 
+import java.time.LocalDate;
 import java.util.Optional;
 
 @Controller
@@ -38,4 +38,17 @@ public class DividendBussines {
 
         return dividendRepository.save(dividend);
     }
+
+    public Enterprise getDividendsByCompany(Long id) {
+        var dividendsAndEnterprise = enterpriseRepository.findById(id);
+        return dividendsAndEnterprise.get();
+    }
+
+//    public DataDetailsDividendDTO getDividendByCompanyAndDate(Long id, String date) {
+//        LocalDate localDate = LocalDate.parse(date);
+//
+//        Optional<Dividend> dividend = dividendRepository.findByEnterpriseIdAndDateAmountPaid(id, localDate);
+//        return new DataDetailsDividendDTO(dividend);
+//    }
+
 }
