@@ -12,7 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import java.time.LocalDate;
-import java.util.Optional;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class DividendBussines {
@@ -23,10 +24,8 @@ public class DividendBussines {
     @Autowired
     private EnterpriseRepository enterpriseRepository;
 
-    @Autowired
-    private EnterpriseBussines enterpriseBussines;
 
-    public Dividend createDividendForEnterprise(Long id, DividendDTO data) throws DividendAlreadyRegisteredException {
+    public Dividend createDividendForEnterprise(DividendDTO data, Long id) throws EnterpriseNotFoundException, DividendAlreadyRegisteredException{
 
         Enterprise enterprise = enterpriseRepository.findById(data.enterpriseId())
                 .orElseThrow(() -> new EnterpriseNotFoundException(id));
@@ -44,11 +43,32 @@ public class DividendBussines {
         return dividendsAndEnterprise.get();
     }
 
-//    public DataDetailsDividendDTO getDividendByCompanyAndDate(Long id, String date) {
-//        LocalDate localDate = LocalDate.parse(date);
-//
-//        Optional<Dividend> dividend = dividendRepository.findByEnterpriseIdAndDateAmountPaid(id, localDate);
-//        return new DataDetailsDividendDTO(dividend);
-//    }
+    public List<DataDetailsDividendDTO> getDividendByCompanyAndDate(Long id, String date) {
 
+        LocalDate localDate = LocalDate.parse(date);
+        List<Dividend> dividendos = dividendRepository.findByEnterpriseIdAndDate(id, localDate);
+        List<DataDetailsDividendDTO> resultado = new ArrayList<>();
+        for (Dividend dividendo : dividendos) {
+            resultado.add(new DataDetailsDividendDTO(dividendo.getId(), dividendo.getAmountPaid(), dividendo.getDateAmountPaid(), dividendo.getEnterprise().getName()));
+        }
+        return resultado;
+    }
+
+    public List<DataDetailsDividendDTO> updateDividendsAndCompanyForDate(Long id, DividendDTO data, String date) {
+        LocalDate localDate = LocalDate.parse(date);
+        List<Dividend> dividendList = dividendRepository.findByEnterpriseIdAndDate(id, localDate);
+        List<DataDetailsDividendDTO> resultado = new ArrayList<>();
+        for (Dividend dividend : dividendList) {
+            dividend.setAmountPaid(data.amountPaid());
+            dividend = dividendRepository.save(dividend);
+            resultado.add(new DataDetailsDividendDTO(dividend.getId(), dividend.getAmountPaid(), dividend.getDateAmountPaid(), dividend.getEnterprise().getName()));
+        }
+        return resultado;
+    }
+
+    public void deleteDividendsFromSpecificCompanyOnDate(Long id, String date) {
+        LocalDate localDate = LocalDate.parse(date);
+
+        dividendRepository.deleteByEnterpriseIdAndDate(id, localDate);
+    }
 }

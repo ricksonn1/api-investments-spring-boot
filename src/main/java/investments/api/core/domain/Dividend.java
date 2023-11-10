@@ -30,12 +30,6 @@ public class Dividend {
     private Enterprise enterprise;
 
 
-//    public Dividend(DividendDTO data) {
-//        this.dateAmountPaid = data.dateAmountPaid();
-//        this.amountPaid = data.amountPaid();
-//        this.enterprise = data.enterpriseId();
-//    }
-
     public Long getId() {
         return id;
     }

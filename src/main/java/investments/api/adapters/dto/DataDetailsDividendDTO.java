@@ -6,6 +6,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Optional;
 
 public record DataDetailsDividendDTO(
         Long id,
@@ -17,5 +18,6 @@ public record DataDetailsDividendDTO(
     public DataDetailsDividendDTO(Dividend dividend) {
         this(dividend.getId(), dividend.getAmountPaid(), dividend.getDateAmountPaid(), dividend.getEnterprise().getName());
     }
+
 }
 
