@@ -1,7 +1,6 @@
 package investments.api.adapters.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import investments.api.core.domain.Dividend;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.math.BigDecimal;

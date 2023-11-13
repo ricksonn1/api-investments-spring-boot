@@ -15,7 +15,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
-import java.util.Collections;
 import java.util.List;
 
 @RestController
@@ -45,7 +44,7 @@ public class DividendController {
     }
 
     @GetMapping("/enterprises/{id}/dividends/{date}")
-    public ResponseEntity<List<DataDetailsDividendDTO>> getDividendByCompanyAndDate(@PathVariable Long id, @PathVariable String date) {
+    public ResponseEntity<List<DataDetailsDividendDTO>> getDividendByCompanyAndDate(@PathVariable Long id, @PathVariable String date)  {
         LocalDate localDate = LocalDate.parse(date);
 
         List<DataDetailsDividendDTO> dividend = dividendBussines.getDividendByCompanyAndDate(id, String.valueOf(localDate));

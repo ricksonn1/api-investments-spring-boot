@@ -16,7 +16,7 @@ public record DataDetailsDividendDTO(
         LocalDate dateAmountPaid,
         String enterpriseName) {
     public DataDetailsDividendDTO(Dividend dividend) {
-        this(dividend.getId(), dividend.getAmountPaid(), dividend.getDateAmountPaid(), dividend.getEnterprise().getName());
+        this(dividend.getId(), dividend.getAmountPaid(), dividend.getDateAmountPaid(), String.valueOf(dividend.getEnterprise().getName()));
     }
 
 }

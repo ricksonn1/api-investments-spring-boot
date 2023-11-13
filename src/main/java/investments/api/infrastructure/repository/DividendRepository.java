@@ -2,6 +2,7 @@ package investments.api.infrastructure.repository;
 
 import investments.api.adapters.dto.DataDetailsDividendDTO;
 import investments.api.adapters.dto.DataDetaisEnterprisesDTO;
+import investments.api.adapters.dto.DividendDTO;
 import investments.api.core.domain.Dividend;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -19,6 +20,7 @@ public interface DividendRepository extends JpaRepository<Dividend, Long> {
 
     @Query("SELECT d FROM Dividend d WHERE d.enterprise.id = :id AND d.dateAmountPaid = :date")
     List<Dividend> findByEnterpriseIdAndDate(@Param("id") Long id, @Param("date") LocalDate date);
+
     @Modifying
     @Query("DELETE FROM Dividend d WHERE d.enterprise.id = :id AND d.dateAmountPaid = :date")
     void deleteByEnterpriseIdAndDate(Long id, LocalDate date);
@@ -26,5 +28,8 @@ public interface DividendRepository extends JpaRepository<Dividend, Long> {
     @Query("SELECT d FROM Dividend d WHERE d.id = :id AND d.enterprise.name = :name")
     Optional<Dividend> findByIdAndEnterpriseName(@Param("id") Long id, @Param("name") String name);
 
+
+    @Query("SELECT d FROM Dividend d WHERE d.enterprise.id = :enterpriseId")
+    List<Dividend> findByEnterpriseId(@Param("enterpriseId") Long enterpriseId);
 }
 
