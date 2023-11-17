@@ -5,6 +5,7 @@ import investments.api.adapters.dto.ReportDTO;
 import investments.api.core.bussinesRule.EnterpriseBussines;
 import investments.api.core.bussinesRule.ReportBussines;
 import investments.api.infrastructure.repository.EnterpriseRepository;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +16,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping
+@SecurityRequirement(name = "bearer-key")
 public class ReportController {
 
     @Autowired

@@ -7,6 +7,7 @@ import investments.api.adapters.dto.EnterpriseDTO;
 import investments.api.infrastructure.exceptions.EnterpriseAlreadyRegisteredException;
 import investments.api.infrastructure.exceptions.EnterpriseNotFoundException;
 import investments.api.infrastructure.repository.EnterpriseRepository;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("enterprises")
+@SecurityRequirement(name = "bearer-key")
 public class EnterpriseController {
 
     @Autowired

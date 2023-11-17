@@ -8,6 +8,7 @@ import investments.api.infrastructure.exceptions.DividendAlreadyRegisteredExcept
 import investments.api.infrastructure.exceptions.EnterpriseNotFoundException;
 import investments.api.infrastructure.repository.DividendRepository;
 import investments.api.infrastructure.repository.EnterpriseRepository;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping
+@SecurityRequirement(name = "bearer-key")
 public class DividendController {
     @Autowired
     private DividendRepository dividendRepository;
